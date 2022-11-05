@@ -1,14 +1,13 @@
-package com.eai.projet;
+package com.eai.project;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-//todo: rename accordingly
 @SpringBootApplication
-public class ProjetApplication {
+public class PortalApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ProjetApplication.class, args);
+        SpringApplication.run(PortalApplication.class, args);
     }
 
 }
