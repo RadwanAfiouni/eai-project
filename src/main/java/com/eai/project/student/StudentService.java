@@ -31,7 +31,7 @@ public class StudentService {
 
     public Student saveStudent(Student student) {
 
-        if (!groupService.groupExists(student.getGroup().getId())) {
+        if (student.getGroup() != null && !groupService.groupExists(student.getGroup().getId())) {
             groupService.saveGroup(student.getGroup());
         }
         return studentRepository.save(student);

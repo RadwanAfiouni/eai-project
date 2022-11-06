@@ -30,7 +30,13 @@ public class StudentController {
     }
 
     @PostMapping(path = "/add")
-    public ResponseEntity<Student> postStudent(@RequestBody Student student) {
+    public ResponseEntity<Student> postStudent(@RequestBody StudentModel studentModel) {
+        Student student = Student.builder()
+                .group(studentModel.getGroupId() != null ? Group.builder().id(studentModel.getGroupId()).build() : null)
+                .firstName(studentModel.getFirstName())
+                .lastName(studentModel.getLastName())
+                .email(studentModel.getEmail())
+                .build();
         return new ResponseEntity<>(studentService.saveStudent(student), HttpStatus.OK);
     }
 

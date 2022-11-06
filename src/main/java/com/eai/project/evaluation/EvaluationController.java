@@ -1,5 +1,7 @@
 package com.eai.project.evaluation;
 
+import com.eai.project.evaluator.Evaluator;
+import com.eai.project.group.Group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,13 @@ public class EvaluationController {
     }
 
     @PostMapping(path = "/add")
-    public ResponseEntity<Evaluation> saveEvaluation(@RequestBody Evaluation evaluation) {
+    public ResponseEntity<Evaluation> saveEvaluation(@RequestBody EvaluationModel evaluationModel) {
+        Evaluation evaluation = Evaluation.builder()
+                .evaluator(Evaluator.builder().id(evaluationModel.getEvaluatorId()).build())
+                .group(Group.builder().id(evaluationModel.getGroupId()).build())
+                .criteria1(evaluationModel.getCriteria1())
+                .criteria2(evaluationModel.getCriteria2())
+                .build();
         return new ResponseEntity<>(evaluationService.saveEvaluation(evaluation), HttpStatus.OK);
     }
 
@@ -38,7 +46,13 @@ public class EvaluationController {
     }
 
     @PutMapping(path = "/update")
-    public ResponseEntity<Evaluation> updateEvaluation(@RequestBody Evaluation evaluation) {
+    public ResponseEntity<Evaluation> updateEvaluation(@RequestBody EvaluationModel evaluationModel) {
+        Evaluation evaluation = Evaluation.builder()
+                .evaluator(Evaluator.builder().id(evaluationModel.getEvaluatorId()).build())
+                .group(Group.builder().id(evaluationModel.getGroupId()).build())
+                .criteria1(evaluationModel.getCriteria1())
+                .criteria2(evaluationModel.getCriteria2())
+                .build();
         return new ResponseEntity<>(evaluationService.updateEvaluation(evaluation), HttpStatus.OK);
     }
 }

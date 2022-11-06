@@ -3,13 +3,19 @@ package com.eai.project.evaluation;
 import com.eai.project.evaluator.Evaluator;
 import com.eai.project.group.Group;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Data
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "evaluation")
 public class Evaluation {
 

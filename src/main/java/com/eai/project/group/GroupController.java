@@ -29,8 +29,8 @@ public class GroupController {
     }
 
     @PostMapping(path = "/add")
-    public ResponseEntity<Group> saveGroup(@RequestBody Group group) {
-        return new ResponseEntity<>(groupService.saveGroup(group), HttpStatus.OK);
+    public ResponseEntity<Group> saveGroup(@RequestBody GroupModel groupModel) {
+        return new ResponseEntity<>(groupService.saveGroup(Group.builder().id(groupModel.getId()).build()), HttpStatus.OK);
     }
 
 }

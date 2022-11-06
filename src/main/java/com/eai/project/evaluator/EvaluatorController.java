@@ -19,7 +19,12 @@ public class EvaluatorController {
     }
 
     @PostMapping(path = "/add")
-    public ResponseEntity<Evaluator> saveEvaluator(@RequestBody Evaluator evaluator) {
+    public ResponseEntity<Evaluator> saveEvaluator(@RequestBody EvaluatorModel evaluatorModel) {
+        Evaluator evaluator = Evaluator.builder()
+                .firstName(evaluatorModel.getFirstName())
+                .lastName(evaluatorModel.getLastName())
+                .email(evaluatorModel.getEmail())
+                .build();
         return new ResponseEntity<>(evaluatorService.saveEvaluator(evaluator), HttpStatus.OK);
     }
 
