@@ -29,7 +29,7 @@ public class GroupController {
     }
 
     @PostMapping(path = "/add")
-    public ResponseEntity<Group> saveGroup(Group group) {
+    public ResponseEntity<Group> saveGroup(@RequestBody Group group) {
         return new ResponseEntity<>(groupService.saveGroup(group), HttpStatus.OK);
     }
 

@@ -18,18 +18,18 @@ public class EvaluationController {
     }
 
     @PostMapping(path = "/add")
-    public ResponseEntity<Evaluation> saveEvaluation(Evaluation evaluation) {
+    public ResponseEntity<Evaluation> saveEvaluation(@RequestBody Evaluation evaluation) {
         return new ResponseEntity<>(evaluationService.saveEvaluation(evaluation), HttpStatus.OK);
     }
 
     @GetMapping(path = "/all")
     public ResponseEntity<Iterable<Evaluation>> getAllEvaluations() {
-        return new ResponseEntity<>(evaluationService.getAllEvaluations(), HttpStatus.OK);
+        return new ResponseEntity<>(evaluationService.fetchAllEvaluations(), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Optional<Evaluation>> getEvaluationById(@PathVariable String id) {
-        return new ResponseEntity<>(evaluationService.getEvaluationById(Long.valueOf(id)), HttpStatus.OK);
+        return new ResponseEntity<>(evaluationService.fetchEvaluationById(Long.valueOf(id)), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/{id}")

@@ -41,22 +41,19 @@ public class StudentService {
         Optional<Student> studentOptional = studentRepository.findById(studentId);
         Optional<Group> groupOptional = groupService.fetchGroupById(groupId);
 
-        if (studentOptional.isPresent() && groupOptional.isPresent()) {
-            Student student = studentOptional.get();
-            Group group = groupOptional.get();
-            student.setGroup(group);
-            studentRepository.save(student);
-            return student.getGroup();
-        }
-
         if (studentOptional.isEmpty()) {
-            throw new IllegalStateException("Student with id " + studentId + " does not exist");
+            throw new IllegalArgumentException("Student with id " + studentId + " does not exist");
         }
 
         if (groupOptional.isEmpty()) {
-            throw new IllegalStateException("Group with id " + groupId + " does not exist");
+            throw new IllegalArgumentException("Group with id " + groupId + " does not exist");
         }
 
-        throw new IllegalStateException("Something went wrong");
+        Student student = studentOptional.get();
+        Group group = groupOptional.get();
+        student.setGroup(group);
+        studentRepository.save(student);
+        return student.getGroup();
+
     }
 }

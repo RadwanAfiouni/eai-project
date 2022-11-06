@@ -1,5 +1,9 @@
 package com.eai.project.evaluation;
 
+import com.eai.project.evaluator.Evaluator;
+import com.eai.project.evaluator.EvaluatorService;
+import com.eai.project.group.Group;
+import com.eai.project.group.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,28 +14,50 @@ import java.util.Optional;
 @Service
 public class EvaluationService {
     private final EvaluationRepository evaluationRepository;
+    private final EvaluatorService evaluatorService;
+    private final GroupService groupService;
 
     @Autowired
-    public EvaluationService(EvaluationRepository evaluationRepository) {
+    public EvaluationService(EvaluationRepository evaluationRepository, EvaluatorService evaluatorService, GroupService groupService) {
         this.evaluationRepository = evaluationRepository;
+        this.evaluatorService = evaluatorService;
+        this.groupService = groupService;
     }
 
     public Evaluation saveEvaluation(Evaluation evaluation) {
+        Optional<Evaluator> evaluator = evaluatorService.fetchEvaluatorById(evaluation.getEvaluator().getId());
+        Optional<Group> group = groupService.fetchGroupById(evaluation.getGroup().getId());
+
+        if (evaluator.isEmpty()) {
+            throw new IllegalArgumentException("Evaluator with id " + evaluation.getEvaluator().getId() + " does not exist");
+        }
+
+        if (group.isEmpty()) {
+            throw new IllegalArgumentException("Group with id " + evaluation.getGroup().getId() + " does not exist");
+        }
+
         evaluation.setLastUpdated(new Date());
+        evaluation.setEvaluator(evaluator.get());
+        evaluation.setGroup(group.get());
+
         return evaluationRepository.save(evaluation);
     }
 
-    public Optional<Evaluation> getEvaluationById(Long id) {
+    public Optional<Evaluation> fetchEvaluationById(Long id) {
         return evaluationRepository.findById(id);
     }
 
-    public List<Evaluation> getAllEvaluations() {
+    public List<Evaluation> fetchAllEvaluations() {
         return evaluationRepository.findAll();
     }
 
     public boolean deleteEvaluation(Long id) {
-        evaluationRepository.deleteById(id);
-        return true;
+        if (evaluationRepository.existsById(id)) {
+            evaluationRepository.deleteById(id);
+            return true;
+        } else {
+            throw new IllegalArgumentException("Evaluation with id " + id + " does not exist");
+        }
     }
 
     public Evaluation updateEvaluation(Evaluation evaluation) {
@@ -46,7 +72,7 @@ public class EvaluationService {
 
             return evaluationRepository.save(evaluation);
         } else {
-            throw new IllegalStateException("Evaluation with id " + evaluation.getId() + " does not exist");
+            throw new IllegalArgumentException("Evaluation with id " + evaluation.getId() + " does not exist");
         }
     }
 }

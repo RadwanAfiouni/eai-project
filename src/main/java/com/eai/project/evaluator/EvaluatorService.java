@@ -19,11 +19,11 @@ public class EvaluatorService {
         return evaluatorRepository.save(evaluator);
     }
 
-    public Optional<Evaluator> getEvaluatorById(Long id) {
+    public Optional<Evaluator> fetchEvaluatorById(Long id) {
         return evaluatorRepository.findById(id);
     }
 
-    public List<Evaluator> getAllEvaluators() {
+    public List<Evaluator> fetchAllEvaluators() {
         return evaluatorRepository.findAll();
     }
 

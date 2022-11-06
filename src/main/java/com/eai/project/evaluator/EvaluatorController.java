@@ -19,18 +19,18 @@ public class EvaluatorController {
     }
 
     @PostMapping(path = "/add")
-    public ResponseEntity<Evaluator> saveEvaluator(Evaluator evaluator) {
+    public ResponseEntity<Evaluator> saveEvaluator(@RequestBody Evaluator evaluator) {
         return new ResponseEntity<>(evaluatorService.saveEvaluator(evaluator), HttpStatus.OK);
     }
 
     @GetMapping(path = "/all")
     public ResponseEntity<List<Evaluator>> getAllEvaluators() {
-        return new ResponseEntity<>(evaluatorService.getAllEvaluators(), HttpStatus.OK);
+        return new ResponseEntity<>(evaluatorService.fetchAllEvaluators(), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Optional<Evaluator>> getEvaluatorById(@PathVariable String id) {
-        return new ResponseEntity<>(evaluatorService.getEvaluatorById(Long.valueOf(id)), HttpStatus.OK);
+        return new ResponseEntity<>(evaluatorService.fetchEvaluatorById(Long.valueOf(id)), HttpStatus.OK);
     }
 
 }
