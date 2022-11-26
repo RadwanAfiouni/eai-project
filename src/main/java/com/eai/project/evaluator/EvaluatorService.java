@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EvaluatorService {
@@ -19,8 +18,8 @@ public class EvaluatorService {
         return evaluatorRepository.save(evaluator);
     }
 
-    public Optional<Evaluator> fetchEvaluatorById(Long id) {
-        return evaluatorRepository.findById(id);
+    public Evaluator fetchEvaluatorById(Long id) {
+        return evaluatorRepository.findById(id).orElseThrow(() -> new RuntimeException("Evaluator not found"));
     }
 
     public List<Evaluator> fetchAllEvaluators() {

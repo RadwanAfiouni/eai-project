@@ -34,7 +34,7 @@ public class EvaluatorController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Optional<Evaluator>> getEvaluatorById(@PathVariable String id) {
+    public ResponseEntity<Evaluator> getEvaluatorById(@PathVariable String id) {
         return new ResponseEntity<>(evaluatorService.fetchEvaluatorById(Long.valueOf(id)), HttpStatus.OK);
     }
 
